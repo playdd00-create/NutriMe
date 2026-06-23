@@ -2,20 +2,12 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    loadUserData();
+    const targetProgress = loadUserData();
 
     loadMeals();
 
     setTimeout(() => {
-        const progressCircle = document.querySelector('.progress-fill');
-        const progressText = document.getElementById('progressPercent');
-        
-        if (progressCircle && progressText) {
-
-            const targetProgress = parseInt(progressCircle.getAttribute('data-target-progress')) || 0;
-
-            animateProgress(targetProgress);
-        }
+        animateProgress(targetProgress);
     }, 600);
 
     const hydrationFill = document.querySelector('.hydration-fill');
@@ -26,9 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateGreeting();
-
     initScrollFade();
-
     initScrollAnimations();
 });
 
@@ -365,7 +355,7 @@ function loadUserData() {
     const savedStartWeight = localStorage.getItem('startWeight');
     const savedCurrentWeight = localStorage.getItem('currentWeight');
     const savedGoalWeight = localStorage.getItem('goalWeight');
-    
+
     if (savedCurrentWeight) document.getElementById('currentWeight').textContent = savedCurrentWeight;
     if (savedGoalWeight) document.getElementById('goalWeight').textContent = `Цель: ${savedGoalWeight} кг`;
 
@@ -378,28 +368,25 @@ function loadUserData() {
         const start = parseFloat(savedStartWeight);
         const current = parseFloat(savedCurrentWeight);
         const goal = parseFloat(savedGoalWeight);
-        
-        let displayProgress = 0;
-        
-        if (start > goal) {
 
+        let displayProgress = 0;
+
+        if (start > goal) {
             const totalToLose = start - goal;
             const alreadyLost = start - current;
             displayProgress = Math.round((alreadyLost / totalToLose) * 100);
             displayProgress = Math.max(0, Math.min(100, displayProgress));
         } else {
-
             const totalToGain = goal - start;
             const alreadyGained = current - start;
             displayProgress = Math.round((alreadyGained / totalToGain) * 100);
             displayProgress = Math.max(0, Math.min(100, displayProgress));
         }
 
-        const progressCircle = document.querySelector('.progress-fill');
-        if (progressCircle) {
-            progressCircle.setAttribute('data-target-progress', displayProgress);
-        }
+        return displayProgress;
     }
+
+    return 0;
 }
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
