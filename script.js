@@ -270,42 +270,44 @@ function animateProgress(targetProgress) {
     const progressCircle = document.querySelector('.progress-fill');
     const progressText = document.getElementById('progressPercent');
     const remainingText = document.querySelector('.remaining-large');
-    
-    if (!progressCircle || !progressText) return;
-    
-    const currentProgress = parseInt(progressText.textContent) || 0;
 
-    progressCircle.style.setProperty('--progress', targetProgress);
-    progressCircle.style.strokeDashoffset = 
-        `calc(276.46 - (276.46 * ${targetProgress}) / 100)`;
+    if (!progressCircle || !progressText) return;
 
     const savedStartWeight = parseFloat(localStorage.getItem('startWeight'));
     const savedCurrentWeight = parseFloat(localStorage.getItem('currentWeight'));
     const savedGoalWeight = parseFloat(localStorage.getItem('goalWeight'));
-    
+
     let targetRemaining = 0;
     if (savedStartWeight && savedCurrentWeight && savedGoalWeight) {
         targetRemaining = Math.abs(savedCurrentWeight - savedGoalWeight);
     }
 
-    const duration = 800;
-    const steps = 40;
-    const difference = targetProgress - currentProgress;
-    const increment = difference / steps;
-    const stepDuration = duration / steps;
+    progressText.textContent = '0%';
+    progressCircle.style.transition = 'none';
+    progressCircle.style.strokeDashoffset = '276.46';
 
+    progressCircle.offsetHeight;
+
+    setTimeout(() => {
+        progressCircle.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1)';
+        progressCircle.style.strokeDashoffset =
+            `calc(276.46 - (276.46 * ${targetProgress}) / 100)`;
+    }, 50);
+
+    const duration = 1000;
+    const steps = 50;
+    const increment = targetProgress / steps;
+    const stepDuration = duration / steps;
     const remainingIncrement = targetRemaining / steps;
+    let currentProgress = 0;
     let currentRemaining = 0;
-    
-    let progress = currentProgress;
-    
+
     const counter = setInterval(() => {
-        progress += increment;
+        currentProgress += increment;
         currentRemaining += remainingIncrement;
-        
-        if ((increment > 0 && progress >= targetProgress) || 
-            (increment < 0 && progress <= targetProgress)) {
-            progress = targetProgress;
+
+        if (currentProgress >= targetProgress) {
+            currentProgress = targetProgress;
             currentRemaining = targetRemaining;
             clearInterval(counter);
 
@@ -313,7 +315,6 @@ function animateProgress(targetProgress) {
                 setTimeout(() => {
                     progressText.style.transition = 'opacity 0.5s ease-out';
                     progressText.style.opacity = '0';
-
                     const goalText = document.getElementById('goalWeight');
                     if (goalText) {
                         goalText.style.transition = 'opacity 0.5s ease-out';
@@ -323,7 +324,6 @@ function animateProgress(targetProgress) {
                         remainingText.style.transition = 'opacity 0.5s ease-out';
                         remainingText.style.opacity = '0';
                     }
-                    
                     setTimeout(() => {
                         progressText.style.fontSize = '12px';
                         progressText.textContent = 'Достигнуто';
@@ -331,22 +331,19 @@ function animateProgress(targetProgress) {
                     }, 500);
                 }, 2000);
             } else {
-
                 progressText.style.fontSize = '22px';
                 const goalText = document.getElementById('goalWeight');
-                if (goalText) {
-                    goalText.style.opacity = '1';
-                }
-                if (remainingText) {
-                    remainingText.style.opacity = '1';
-                }
+                if (goalText) goalText.style.opacity = '1';
+                if (remainingText) remainingText.style.opacity = '1';
             }
         }
-        
-        progressText.textContent = Math.round(progress) + '%';
+
+        progressText.textContent = Math.round(currentProgress) + '%';
 
         if (remainingText && targetRemaining > 0) {
-            const displayValue = currentRemaining < 1 ? currentRemaining.toFixed(1) : Math.round(currentRemaining);
+            const displayValue = currentRemaining < 1
+                ? currentRemaining.toFixed(1)
+                : Math.round(currentRemaining);
             remainingText.textContent = `До цели осталось ${displayValue} кг`;
         }
     }, stepDuration);
