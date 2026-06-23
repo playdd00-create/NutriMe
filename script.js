@@ -1028,7 +1028,7 @@ if (themeCustomSelect) {
     const valueEl = themeCustomSelect.querySelector('.custom-select-value');
     const options = themeCustomSelect.querySelectorAll('.custom-select-option');
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     const savedOption = Array.from(options).find(opt => opt.dataset.value === savedTheme);
     if (savedOption) {
         valueEl.textContent = savedOption.textContent;
