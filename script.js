@@ -356,37 +356,40 @@ function loadUserData() {
     const savedCurrentWeight = localStorage.getItem('currentWeight');
     const savedGoalWeight = localStorage.getItem('goalWeight');
 
-    if (savedCurrentWeight) document.getElementById('currentWeight').textContent = savedCurrentWeight;
-    if (savedGoalWeight) document.getElementById('goalWeight').textContent = `Цель: ${savedGoalWeight} кг`;
+    // Если данных нет — устанавливаем дефолтные значения для нового пользователя
+    if (!savedStartWeight || !savedCurrentWeight || !savedGoalWeight) {
+        localStorage.setItem('startWeight', '85');
+        localStorage.setItem('currentWeight', '82');
+        localStorage.setItem('goalWeight', '75');
+    }
+
+    const startWeight = parseFloat(localStorage.getItem('startWeight'));
+    const currentWeight = parseFloat(localStorage.getItem('currentWeight'));
+    const goalWeight = parseFloat(localStorage.getItem('goalWeight'));
+
+    document.getElementById('currentWeight').textContent = currentWeight;
+    document.getElementById('goalWeight').textContent = `Цель: ${goalWeight} кг`;
 
     const remainingText = document.querySelector('.remaining-large');
     if (remainingText) {
         remainingText.textContent = 'До цели осталось 0 кг';
     }
 
-    if (savedStartWeight && savedCurrentWeight && savedGoalWeight) {
-        const start = parseFloat(savedStartWeight);
-        const current = parseFloat(savedCurrentWeight);
-        const goal = parseFloat(savedGoalWeight);
+    let displayProgress = 0;
 
-        let displayProgress = 0;
-
-        if (start > goal) {
-            const totalToLose = start - goal;
-            const alreadyLost = start - current;
-            displayProgress = Math.round((alreadyLost / totalToLose) * 100);
-            displayProgress = Math.max(0, Math.min(100, displayProgress));
-        } else {
-            const totalToGain = goal - start;
-            const alreadyGained = current - start;
-            displayProgress = Math.round((alreadyGained / totalToGain) * 100);
-            displayProgress = Math.max(0, Math.min(100, displayProgress));
-        }
-
-        return displayProgress;
+    if (startWeight > goalWeight) {
+        const totalToLose = startWeight - goalWeight;
+        const alreadyLost = startWeight - currentWeight;
+        displayProgress = Math.round((alreadyLost / totalToLose) * 100);
+        displayProgress = Math.max(0, Math.min(100, displayProgress));
+    } else {
+        const totalToGain = goalWeight - startWeight;
+        const alreadyGained = currentWeight - startWeight;
+        displayProgress = Math.round((alreadyGained / totalToGain) * 100);
+        displayProgress = Math.max(0, Math.min(100, displayProgress));
     }
 
-    return 0;
+    return displayProgress;
 }
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
