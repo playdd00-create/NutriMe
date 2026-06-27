@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriMe — Apple</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="variant-apple.css">
+</head>
+<body>
+    <a class="back-to-concepts" href="index.html">← Концепты</a>
+    <div class="app">
+        <header class="header">
+            <div class="header-content">
+                <div class="greeting">
+                    <h1 class="large-title">Доброе утро</h1>
+                    <p class="subtitle">Сегодня вы на шаг ближе к цели</p>
+                </div>
+                <div class="user-avatar">
+                    <img src="avatar.jpg" alt="Аватар">
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content" id="mainPage">
+            <section class="progress-card-large card" onclick="openWeightModal()">
+                <div class="progress-content">
+                    <div class="progress-info-large">
+                        <h3 class="card-label">Прогресс</h3>
+                        <div class="weight-display">
+                            <div class="current-weight-large">
+                                <span class="weight-number-large" id="currentWeight">82</span>
+                                <span class="weight-unit-large">кг</span>
+                            </div>
+                            <div class="goal-info-large">
+                                <p class="goal-text-large" id="goalWeight">Цель: 75 кг</p>
+                                <p class="remaining-large">До цели осталось 7 кг</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="progress-circle-large">
+                        <svg width="100" height="100">
+                            <circle cx="50" cy="50" r="44" class="progress-bg"></circle>
+                            <circle cx="50" cy="50" r="44" class="progress-fill" data-target-progress="0"></circle>
+                        </svg>
+                        <div class="progress-percent-large" id="progressPercent">0%</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="calories-card card">
+                <h2 class="headline">Калории</h2>
+                <div class="calories-value">
+                    <span class="big-number">1450</span>
+                    <span class="calories-subtitle">из 2200 ккал</span>
+                </div>
+                <div class="calories-progress-bar">
+                    <div class="calories-progress-fill" style="width: 66%"></div>
+                </div>
+            </section>
+
+            <section class="hydration-card card">
+                <h2 class="headline">Гидратация</h2>
+                <div class="hydration-value">
+                    <span class="hydration-icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                            <path d="M14 3C10.5 3 8 6.5 8 10.5C8 14.5 10.5 17 14 23C17.5 17 20 14.5 20 10.5C20 6.5 17.5 3 14 3Z" fill="currentColor"/>
+                        </svg>
+                    </span>
+                    <span class="hydration-text">1.8 л</span>
+                    <span class="hydration-goal">из 2.5 л</span>
+                </div>
+                <div class="hydration-bar">
+                    <div class="hydration-fill" style="--fill: 72%"></div>
+                </div>
+            </section>
+
+            <section class="activity-section">
+                <h2 class="title">Активность</h2>
+                <div class="activity-grid">
+                    <div class="activity-card card">
+                        <p class="caption">Шаги</p>
+                        <p class="body-large">8 234</p>
+                    </div>
+                    <div class="activity-card card">
+                        <p class="caption">Калории</p>
+                        <p class="body-large">450 ккал</p>
+                    </div>
+                    <div class="activity-card card">
+                        <p class="caption">Минуты активности</p>
+                        <p class="body-large">45 мин</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="quick-actions">
+                <h2 class="title">Быстрые действия</h2>
+                <div class="actions-grid">
+                    <button class="action-button">
+                        <span class="action-icon">
+                            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                                <rect x="5" y="9" width="26" height="18" rx="3" stroke="currentColor" stroke-width="2.5"/>
+                                <circle cx="18" cy="18" r="4.5" stroke="currentColor" stroke-width="2.5"/>
+                                <circle cx="26" cy="13" r="1.5" fill="currentColor"/>
+                            </svg>
+                        </span>
+                        <span class="action-text">Сканировать еду</span>
+                    </button>
+                    <button class="action-button" onclick="openMealModal()">
+                        <span class="action-icon">
+                            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                                <path d="M18 10V26M10 18H26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <circle cx="18" cy="18" r="12" stroke="currentColor" stroke-width="2.5"/>
+                            </svg>
+                        </span>
+                        <span class="action-text">Добавить блюдо</span>
+                    </button>
+                    <button class="action-button">
+                        <span class="action-icon">
+                            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                                <path d="M18 4C13.5 4 10 8 10 13C10 18 13.5 21 18 29C22.5 21 26 18 26 13C26 8 22.5 4 18 4Z" fill="currentColor"/>
+                            </svg>
+                        </span>
+                        <span class="action-text">Добавить воду</span>
+                    </button>
+                    <button class="action-button">
+                        <span class="action-icon">
+                            <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                                <path d="M14 12L18 7L22 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M18 7V22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                                <path d="M10 29C10 29 13 24 18 24C23 24 26 29 26 29" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <span class="action-text">Добавить активность</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="recent-meals">
+                <h2 class="title">Последние блюда</h2>
+                <div class="meals-list-wrapper" id="mealsListWrapper">
+                    <div class="meals-list" id="mealsList"></div>
+                </div>
+                <button class="show-more-meals" id="showMoreMeals" style="display: none;" onclick="toggleMealsList()">
+                    <svg class="show-more-chevron" id="showMoreChevron" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </section>
+
+            <section class="scanner-card card">
+                <div class="card-content center">
+                    <h2 class="headline">Сканируйте еду</h2>
+                    <button class="primary-button">Открыть камеру</button>
+                </div>
+            </section>
+        </main>
+
+        <main class="main-content settings-page" id="settingsPage" style="display: none;">
+            <section class="settings-section">
+                <h2 class="title">Настройки</h2>
+                <div class="card settings-card">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <p class="headline">Язык</p>
+                            <p class="caption">Выберите язык интерфейса</p>
+                        </div>
+                        <div class="custom-select" id="languageCustomSelect">
+                            <div class="custom-select-trigger">
+                                <span class="custom-select-value">Русский</span>
+                            </div>
+                            <div class="custom-select-options">
+                                <div class="custom-select-option selected" data-value="ru">Русский</div>
+                                <div class="custom-select-option" data-value="en">Английский</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card settings-card">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <p class="headline">Тема</p>
+                            <p class="caption">Выберите тему оформления</p>
+                        </div>
+                        <div class="custom-select" id="themeCustomSelect">
+                            <div class="custom-select-trigger">
+                                <span class="custom-select-value">Светлая</span>
+                            </div>
+                            <div class="custom-select-options">
+                                <div class="custom-select-option selected" data-value="light">Светлая</div>
+                                <div class="custom-select-option" data-value="dark">Темная</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card settings-card">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <p class="headline">О приложении</p>
+                            <p class="caption">NutriMe v1.0</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-button" data-page="progress"><span class="nav-text">In progress</span></button>
+            <button class="nav-button active" data-page="main"><span class="nav-text">Main</span></button>
+            <button class="nav-button" data-page="settings"><span class="nav-text">Settings</span></button>
+        </nav>
+
+        <div class="gradient-fade" id="gradientFade"></div>
+    </div>
+
+    <div class="modal" id="weightModal" style="display: none;">
+        <div class="modal-content">
+            <h2 class="modal-title">Обновить вес</h2>
+            <div class="input-group">
+                <label class="input-label">Начальный вес (кг)</label>
+                <input type="number" id="inputStartWeight" class="input-field" placeholder="85">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Текущий вес (кг)</label>
+                <input type="number" id="inputCurrentWeight" class="input-field" placeholder="82">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Целевой вес (кг)</label>
+                <input type="number" id="inputGoalWeight" class="input-field" placeholder="75">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-button secondary" onclick="closeWeightModal()">Отмена</button>
+                <button class="modal-button primary" onclick="saveWeight()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="mealModal" style="display: none;">
+        <div class="modal-content">
+            <h2 class="modal-title">Добавить блюдо</h2>
+            <div class="input-group">
+                <label class="input-label">Название блюда</label>
+                <input type="text" id="inputMealName" class="input-field" placeholder="Овсянка с ягодами">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Калории (ккал)</label>
+                <input type="number" id="inputMealCalories" class="input-field" placeholder="320">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Фото (необязательно)</label>
+                <div class="photo-upload-wrapper">
+                    <input type="file" id="inputMealPhoto" class="photo-input" accept="image/*" onchange="previewMealPhoto(event)">
+                    <label for="inputMealPhoto" class="photo-upload-label">
+                        <div class="photo-preview" id="photoPreview">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <path d="M16 10V22M10 16H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <span class="photo-upload-text">Добавить фото</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-button secondary" onclick="closeMealModal()">Отмена</button>
+                <button class="modal-button primary" onclick="saveMeal()">Добавить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        (function () {
+            const p = {
+                '--bg-primary': '#F5F5F7', '--bg-card': '#FFFFFF',
+                '--text-primary': '#1D1D1F', '--text-secondary': '#86868B',
+                '--accent': '#30D158', '--divider': '#E5E5EA',
+                '--nav-bg': 'rgba(255,255,255,0.7)',
+                '--shadow-sm': '0 2px 12px rgba(0,0,0,0.05)',
+                '--shadow-md': '0 8px 30px rgba(0,0,0,0.08)'
+            };
+            for (const k in p) document.documentElement.style.setProperty(k, p[k]);
+        })();
+    </script>
+</body>
+</html>

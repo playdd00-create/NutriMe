@@ -1,0 +1,239 @@
+/* ============================================
+   КОНЦЕПТ: NIKE — смелый, энергичный, контрастный
+   Белый фон, чёрный жирный курсив капсом, оранжевый акцент
+   (Nike Training Club / Run Club)
+   ============================================ */
+
+:root {
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Жирные курсивные заголовки капсом — фирменный Nike-стиль */
+.large-title,
+.title,
+.modal-title {
+    text-transform: uppercase;
+    font-style: italic;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    overflow-wrap: break-word;
+}
+
+.large-title {
+    font-size: 38px;
+    line-height: 0.98;
+}
+
+.title {
+    font-size: 28px;
+}
+
+.subtitle {
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    font-size: 13px;
+}
+
+/* Крупные числа — жирный курсив */
+.weight-number-large,
+.big-number,
+.hydration-text {
+    font-style: italic;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.card-label,
+.caption,
+.action-text,
+.goal-text-large,
+.calories-subtitle,
+.hydration-goal,
+.input-label {
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* Узкие подписи активности — мельче, чтобы не вылезали */
+.activity-card .caption {
+    font-size: 10px;
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+}
+
+.action-text {
+    font-size: 13px;
+    letter-spacing: 0.2px;
+}
+
+.subtitle {
+    letter-spacing: 0.3px;
+}
+
+/* Карточки — резкие углы, высокий контраст */
+.card {
+    border-radius: var(--radius-md);
+}
+
+/* Акцентная полоса слева у главной карточки */
+.progress-card-large {
+    border-left: 5px solid var(--accent);
+}
+
+.progress-fill {
+    stroke-width: 8;
+    stroke-linecap: butt;
+}
+
+/* ===== NIKE HERO — смелый оранжевый блок-герой ===== */
+.nike-dash {
+    gap: 16px;
+}
+
+.nike-hero {
+    background: var(--accent);
+    color: #fff;
+    border-radius: 8px;
+    padding: 26px 22px 22px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+}
+
+.nike-hero:active {
+    transform: scale(0.98);
+}
+
+.nike-kicker {
+    text-transform: uppercase;
+    font-style: italic;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    opacity: 0.92;
+}
+
+.nike-bignum {
+    line-height: 0.85;
+    margin-top: 4px;
+}
+
+.nike-hero .progress-percent-large {
+    position: static;
+    transform: none;
+    font-size: 92px !important;
+    font-weight: 800;
+    font-style: italic;
+    letter-spacing: -4px;
+    color: #fff;
+}
+
+.nike-accent-bar {
+    height: 6px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.4);
+    margin: 16px 0;
+    transform: skewX(-12deg);
+}
+
+.nike-stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.nike-hero .current-weight-large {
+    align-items: baseline;
+}
+
+.nike-hero .weight-number-large {
+    color: #fff;
+    font-size: 34px;
+    font-style: italic;
+    font-weight: 800;
+}
+
+.nike-hero .weight-unit-large {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.nike-hero .goal-text-large {
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    font-weight: 800;
+    font-style: italic;
+    font-size: 13px;
+}
+
+.nike-hero .remaining-large {
+    display: inline-block;
+    align-self: flex-start;
+    margin-top: 14px;
+    background: #111;
+    color: #fff;
+    padding: 7px 14px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-style: italic;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+}
+
+/* Прогресс-бары — резкие, мощные */
+.calories-progress-fill,
+.hydration-fill {
+    border-radius: 0;
+}
+
+.calories-progress-bar,
+.hydration-bar {
+    border-radius: 0;
+}
+
+/* Кнопки — резкие, капсом, курсив */
+.primary-button,
+.modal-button {
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    font-style: italic;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.remaining-large {
+    text-transform: uppercase;
+    font-weight: 800;
+    font-style: italic;
+    letter-spacing: 0.2px;
+    overflow-wrap: break-word;
+}
+
+/* Навигация — единый пилюль-стиль, текст капсом-курсивом (Nike) */
+.nav-button {
+    text-transform: uppercase;
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.action-button {
+    border-radius: var(--radius-md);
+}
+
+.meal-item {
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--accent);
+}

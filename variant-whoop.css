@@ -1,0 +1,334 @@
+/* ============================================
+   КОНЦЕПТ: WHOOP — тёмный дашборд
+   Серые карточки на чёрном, толстые кольца с круглыми концами,
+   мелкие капс-лейблы, крупные белые числа, зелёные статусы.
+   ============================================ */
+
+:root {
+    --radius-sm: 14px;
+    --radius-md: 20px;
+    --radius-lg: 24px;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Плотная дашборд-компоновка */
+.main-content {
+    gap: 14px;
+}
+
+/* Серые карточки на чёрном — без обводок и теней */
+.card {
+    background: var(--bg-card);
+    border: none;
+    box-shadow: none;
+    border-radius: 20px;
+    padding: 18px;
+}
+
+/* Заголовки секций — мелкий капс с трекингом (как "WOMEN'S HORMONAL INSIGHTS") */
+.title {
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+}
+
+/* Мелкие капс-лейблы */
+.card-label,
+.caption,
+.calories-subtitle,
+.hydration-goal,
+.goal-text-large,
+.headline {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.headline {
+    font-size: 12px;
+}
+
+/* Крупные жирные белые числа */
+.weight-number-large {
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+}
+
+.big-number,
+.hydration-text {
+    font-weight: 800;
+    letter-spacing: -1px;
+    font-variant-numeric: tabular-nums;
+}
+
+.progress-percent-large {
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+/* ===== HERO: большое толстое кольцо, число+подпись ВНУТРИ ===== */
+.whoop-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 18px 24px;
+}
+
+.whoop-hero .progress-circle-large {
+    transform: scale(1.75);
+    margin: 46px 0 42px;
+}
+
+.whoop-hero .progress-circle-large .progress-bg {
+    stroke: #2A2D33;
+    stroke-width: 5;
+}
+
+.whoop-hero .progress-circle-large .progress-fill {
+    stroke-width: 5;
+    stroke-linecap: round;
+}
+
+/* Центр кольца — число + подпись */
+.ring-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 72px;
+}
+
+.whoop-hero .progress-percent-large {
+    position: static;
+    transform: none;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+
+.ring-sub {
+    font-size: 6.5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    font-weight: 700;
+    margin-top: 3px;
+}
+
+/* ===== Зональные полоски активности (как зоны пульса WHOOP) ===== */
+.whoop-zones {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 18px;
+}
+
+.zone-row {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.zone-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.zone-label {
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.zone-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Нормализуем значения, у которых есть классы из script.js */
+.whoop-zones .big-number,
+.whoop-zones .hydration-text {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0;
+    color: var(--text-primary);
+}
+
+.zone-track {
+    height: 8px;
+    border-radius: 4px;
+    background: #2A2D33;
+    overflow: hidden;
+}
+
+.zone-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zone-fill.zone-red {
+    background: #FF4438;
+}
+
+.zone-fill.zone-yellow {
+    background: #FFB020;
+}
+
+/* Цветные заливки перебивают базовый акцент (.calories-progress-fill / .hydration-fill) */
+.zone-fill.zone-green {
+    background: #00E59A;
+}
+
+.zone-fill.zone-blue {
+    background: #2E9BFF;
+}
+
+/* Подвал героя — вес и статус по центру */
+.whoop-hero-foot {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.whoop-hero-foot .current-weight-large {
+    justify-content: center;
+}
+
+/* Зелёный «статус» под целью — как бейдж "high" */
+.remaining-large {
+    display: inline-block;
+    background: rgba(0, 229, 154, 0.12);
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 8px;
+    margin-top: 4px;
+}
+
+/* 2-колоночная сетка метрик (калории + вода) */
+.whoop-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.whoop-row .card {
+    display: flex;
+    flex-direction: column;
+}
+
+.whoop-row .calories-value,
+.whoop-row .hydration-value {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    margin: 10px 0 14px;
+}
+
+.whoop-row .big-number,
+.whoop-row .hydration-text {
+    font-size: 30px;
+}
+
+/* Зональные бары — серая дорожка, зелёная заливка */
+.calories-progress-bar,
+.hydration-bar {
+    background: #2A2D33;
+}
+
+.calories-progress-fill,
+.hydration-fill {
+    background: var(--accent);
+}
+
+/* ===== Плитки-метрики (как RESP / SPO2 / RHR внизу WHOOP) ===== */
+.activity-card {
+    background: var(--bg-card);
+    padding: 16px 8px 14px;
+    position: relative;
+}
+
+.activity-card .caption {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 10px;
+    letter-spacing: 0.6px;
+}
+
+.activity-card .body-large {
+    font-size: 20px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Зелёная галочка-статус в углу плитки */
+.activity-card::after {
+    content: '✓';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #000;
+    font-size: 10px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+/* Иконки действий */
+.action-icon {
+    color: var(--accent);
+}
+
+/* Навигация — пилюля как табы WHOOP: активная белая с тёмным текстом */
+.nav-button {
+    font-size: 13px;
+}
+
+.nav-button.active {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+/* Кнопки */
+.primary-button,
+.modal-button.primary {
+    color: #000;
+}
+
+.meal-photo {
+    color: #000;
+}
+
+.show-more-meals {
+    border-color: var(--divider);
+}

@@ -893,21 +893,20 @@ html {
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--nav-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1.5px solid var(--accent);
-    border-radius: 50px;
+    background: rgba(120, 120, 128, 0.18);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: none;
+    border-radius: 30px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 8px 10px;
-    gap: 8px;
+    padding: 4px;
+    gap: 4px;
     z-index: 100;
     width: calc(100% - 32px);
     max-width: 540px;
-    box-shadow: 0 0 12px rgba(48, 209, 88, 0.3),
-                0 0 20px rgba(48, 209, 88, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 @media (min-width: 391px) {
@@ -918,17 +917,17 @@ html {
 
 .nav-button {
     background: transparent;
-    border: 1.5px solid var(--accent);
-    border-radius: 50px;
-    padding: 10px 20px;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--accent);
+    border: none;
+    border-radius: 24px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    opacity: 0.65;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.25s ease;
     flex: 1;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;
-    font-style: italic;
+    font-family: inherit;
     white-space: nowrap;
     min-width: 0;
     text-align: center;
@@ -938,14 +937,13 @@ html {
 }
 
 .nav-button:hover {
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
 .nav-button.active {
-    background: transparent;
-    color: var(--accent);
-    font-style: normal;
-    font-weight: 600;
+    background: var(--accent);
+    color: #fff;
+    opacity: 1;
 }
 
 .nav-button:active {
@@ -953,7 +951,7 @@ html {
 }
 
 .nav-text {
-    font-size: 15px;
+    font-size: 13px;
     font-family: inherit;
 }
 
@@ -1123,4 +1121,29 @@ body {
 .page-hidden {
     opacity: 0 !important;
     transform: translateY(20px) !important;
+}
+
+.back-to-concepts {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 9999;
+    padding: 8px 14px;
+    border-radius: 20px;
+    background: rgba(120, 120, 128, 0.22);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.back-to-concepts:hover {
+    opacity: 0.7;
+}
+
+body {
+    padding-top: 56px;
 }

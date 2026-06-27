@@ -1,0 +1,43 @@
+/* ============================================
+   КОНЦЕПТ: APPLE — чистый, светлый, воздушный
+   (Apple Health / Fitness)
+   ============================================ */
+
+:root {
+    --radius-sm: 14px;
+    --radius-md: 18px;
+    --radius-lg: 24px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', sans-serif;
+}
+
+/* Воздушная компоновка — много свободного пространства */
+.main-content {
+    gap: 28px;
+}
+
+.card {
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    padding: 26px;
+}
+
+.large-title {
+    letter-spacing: -0.8px;
+}
+
+.card-label {
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+/* Мягкий зелёный круг прогресса */
+.progress-fill {
+    stroke-width: 7;
+}
+
+.primary-button,
+.modal-button.primary {
+    border-radius: 14px;
+}

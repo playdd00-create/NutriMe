@@ -841,14 +841,9 @@ function deleteMeal(mealElement, mealIndex) {
 function updateTotalCalories() {
     const meals = JSON.parse(localStorage.getItem('meals')) || [];
 
-    const today = new Date().toDateString();
-
     let totalCalories = 0;
     meals.forEach(meal => {
-        const mealDate = new Date(meal.date).toDateString();
-        if (mealDate === today) {
-            totalCalories += parseInt(meal.calories);
-        }
+        totalCalories += parseInt(meal.calories) || 0;
     });
 
     const caloriesNumber = document.querySelector('.big-number');

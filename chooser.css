@@ -1,0 +1,201 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0B0B0C;
+    color: #fff;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+.chooser {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+}
+
+.chooser-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.chooser-title {
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.chooser-sub {
+    margin-top: 10px;
+    font-size: 17px;
+    color: #9A9AA0;
+}
+
+.concept-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 880px) {
+    .concept-grid {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+        margin: 0 auto;
+    }
+}
+
+.concept-card {
+    display: flex;
+    flex-direction: column;
+    background: #151517;
+    border: 1px solid #232327;
+    border-radius: 22px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.concept-card:hover {
+    transform: translateY(-6px);
+    border-color: #3A3A40;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.concept-preview {
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Apple preview — светлый, мягкое кольцо + бары */
+.apple-preview {
+    background: #F5F5F7;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.cp-ring {
+    width: 74px;
+    height: 74px;
+    border-radius: 50%;
+    border: 8px solid #E5E5EA;
+    border-top-color: #30D158;
+    border-right-color: #30D158;
+    transform: rotate(45deg);
+}
+
+.cp-bars {
+    display: flex;
+    gap: 8px;
+}
+
+.cp-bars span {
+    width: 46px;
+    height: 10px;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.cp-bars span:first-child {
+    background: #30D158;
+}
+
+/* WHOOP preview — тёмный дашборд, большое кольцо + плитки */
+.whoop-preview {
+    background: #000;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.cp-hero-ring {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 6px solid #1C1E22;
+    border-top-color: #00D98B;
+    border-left-color: #00D98B;
+    transform: rotate(-30deg);
+}
+
+.cp-tiles {
+    display: flex;
+    gap: 8px;
+}
+
+.cp-tiles span {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #222428;
+    background: #0E0E10;
+}
+
+/* Nike preview — белый, огромный жирный курсив + акцент */
+.nike-preview {
+    background: #fff;
+    color: #111;
+    flex-direction: column;
+}
+
+.cp-bigtype {
+    font-size: 96px;
+    font-weight: 800;
+    font-style: italic;
+    letter-spacing: -4px;
+    color: #111;
+    line-height: 1;
+}
+
+.cp-accent-bar {
+    width: 120px;
+    height: 12px;
+    background: #FF3B00;
+    margin-top: 10px;
+    transform: skewX(-12deg);
+}
+
+.concept-meta {
+    padding: 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.concept-meta h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.concept-meta p {
+    font-size: 14px;
+    color: #9A9AA0;
+    line-height: 1.5;
+    flex: 1;
+}
+
+.concept-go {
+    margin-top: 18px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.chooser-note {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #6A6A70;
+}
