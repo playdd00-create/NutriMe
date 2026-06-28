@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateGreeting();
     initScrollFade();
     initScrollAnimations();
+    initRingParticles();
 });
 
 function updateGreeting() {
@@ -303,8 +304,10 @@ function animateProgress(targetProgress) {
 
             if (targetProgress >= 100) {
                 setTimeout(() => {
+                    const hasParticles = document.querySelector('.ring-particles');
                     progressText.style.transition = 'opacity 0.5s ease-out';
                     progressText.style.opacity = '0';
+
                     const goalText = document.getElementById('goalWeight');
                     if (goalText) {
                         goalText.style.transition = 'opacity 0.5s ease-out';
@@ -314,17 +317,31 @@ function animateProgress(targetProgress) {
                         remainingText.style.transition = 'opacity 0.5s ease-out';
                         remainingText.style.opacity = '0';
                     }
-                    setTimeout(() => {
-                        progressText.style.fontSize = '12px';
-                        progressText.textContent = 'Достигнуто';
-                        progressText.style.opacity = '1';
-                    }, 500);
+                    const ringSub = document.querySelector('.ring-sub');
+                    if (ringSub) {
+                        ringSub.style.transition = 'opacity 0.5s ease-out';
+                        ringSub.style.opacity = '0';
+                    }
+
+                    if (hasParticles) {
+                        setRingCheckmark(true);
+                    } else {
+                        setTimeout(() => {
+                            progressText.style.fontSize = '12px';
+                            progressText.textContent = 'Достигнуто';
+                            progressText.style.opacity = '1';
+                        }, 500);
+                    }
                 }, 2000);
             } else {
+                setRingCheckmark(false);
                 progressText.style.fontSize = '22px';
+                progressText.style.opacity = '1';
                 const goalText = document.getElementById('goalWeight');
                 if (goalText) goalText.style.opacity = '1';
                 if (remainingText) remainingText.style.opacity = '1';
+                const ringSub = document.querySelector('.ring-sub');
+                if (ringSub) ringSub.style.opacity = '1';
             }
         }
 
@@ -1246,4 +1263,169 @@ function getGreetingEn() {
     if (hours >= 12 && hours < 18) return 'Good afternoon';
     if (hours >= 18 && hours < 23) return 'Good evening';
     return 'Good night';
+}
+
+let ringCheckmark = false;
+function setRingCheckmark(on) {
+    ringCheckmark = on;
+}
+
+function initRingParticles() {
+    const canvas = document.querySelector('.ring-particles');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width;
+    const H = canvas.height;
+    const cx = W / 2;
+    const cy = H / 2;
+    const maxR = W * 0.42;
+    const minR = 6;
+    const COUNT = 90;
+    const particles = [];
+
+    function spawn(p, initial) {
+        p.angle = Math.random() * Math.PI * 2;
+        p.radius = initial ? Math.random() * maxR : maxR * (1.0 + Math.random() * 0.1);
+        p.speed = 0.12 + Math.random() * 0.30;
+        p.spin = 0.003 + Math.random() * 0.010;
+        p.size = 0.6 + Math.random() * 1.7;
+        p.baseAlpha = 0.25 + Math.random() * 0.6;
+        p.ease = 0.018 + Math.random() * 0.020;
+        p.x = cx + Math.cos(p.angle) * p.radius;
+        p.y = cy + Math.sin(p.angle) * p.radius;
+        p.alpha = 0;
+    }
+
+    for (let i = 0; i < COUNT; i++) {
+        const p = {};
+        spawn(p, true);
+        particles.push(p);
+    }
+
+    // Целевые точки для галочки (шире + редкие точки, не сплошная заливка)
+    // Галочка: партиклы разбросаны полосой вдоль линии (толщина из множества точек)
+    const CHECK_DOTS = 80;
+    const ROWS = 4;
+    const halfThickness = 8;
+    const pts = [
+        { x: cx - 50, y: cy + 2 },
+        { x: cx - 16, y: cy + 34 },
+        { x: cx + 58, y: cy - 38 }
+    ];
+    const segs = [];
+    let totalLen = 0;
+    for (let i = 0; i < pts.length - 1; i++) {
+        const dx = pts[i + 1].x - pts[i].x;
+        const dy = pts[i + 1].y - pts[i].y;
+        const len = Math.hypot(dx, dy);
+        segs.push({ a: pts[i], b: pts[i + 1], len });
+        totalLen += len;
+    }
+
+    function pathAt(d) {
+        for (let s = 0; s < segs.length; s++) {
+            const seg = segs[s];
+            if (d <= seg.len || s === segs.length - 1) {
+                const t = seg.len ? Math.min(1, d / seg.len) : 0;
+                const dirx = (seg.b.x - seg.a.x) / seg.len;
+                const diry = (seg.b.y - seg.a.y) / seg.len;
+                return {
+                    x: seg.a.x + (seg.b.x - seg.a.x) * t,
+                    y: seg.a.y + (seg.b.y - seg.a.y) * t,
+                    nx: -diry,
+                    ny: dirx
+                };
+            }
+            d -= seg.len;
+        }
+        return { x: cx, y: cy, nx: 0, ny: 0 };
+    }
+
+    const checkTargets = [];
+    const cols = Math.ceil(CHECK_DOTS / ROWS);
+    for (let i = 0; i < CHECK_DOTS; i++) {
+        const col = Math.floor(i / ROWS);
+        const row = i % ROWS;
+        // равномерно по длине + лёгкий джиттер
+        const dBase = (col + 0.5) / cols * totalLen;
+        const d = Math.max(0, Math.min(totalLen, dBase + (Math.random() - 0.5) * (totalLen / cols) * 0.5));
+        const pt = pathAt(d);
+        // равномерно по ширине (края + середина) + лёгкий джиттер
+        const rowOff = ROWS > 1 ? (row / (ROWS - 1) - 0.5) * 2 * halfThickness : 0;
+        const off = rowOff + (Math.random() - 0.5) * (2 * halfThickness / ROWS) * 0.6;
+        checkTargets.push({
+            x: pt.x + pt.nx * off,
+            y: pt.y + pt.ny * off
+        });
+    }
+
+    function frame() {
+        ctx.clearRect(0, 0, W, H);
+
+        const glowAlpha = ringCheckmark ? 0.18 : 0.28;
+        const glow = ctx.createRadialGradient(cx, cy, 2, cx, cy, maxR);
+        glow.addColorStop(0, `rgba(0,229,154,${glowAlpha})`);
+        glow.addColorStop(0.45, 'rgba(0,229,154,0.06)');
+        glow.addColorStop(1, 'rgba(0,229,154,0)');
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(cx, cy, maxR, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (!ringCheckmark) {
+            const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR * 0.22);
+            core.addColorStop(0, 'rgba(0,0,0,0.9)');
+            core.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = core;
+            ctx.beginPath();
+            ctx.arc(cx, cy, maxR * 0.22, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+
+            if (!ringCheckmark) {
+                p.radius -= p.speed;
+                p.angle += p.spin;
+                if (p.radius <= minR) spawn(p, false);
+                p.x = cx + Math.cos(p.angle) * p.radius;
+                p.y = cy + Math.sin(p.angle) * p.radius;
+                const fadeIn = Math.min(1, (maxR - p.radius) / (maxR * 0.28));
+                const fadeOut = Math.min(1, p.radius / (maxR * 0.34));
+                const env = Math.max(0, Math.min(fadeIn, fadeOut));
+                p.alpha = p.baseAlpha * env;
+            } else {
+                if (i < checkTargets.length) {
+                    const tgt = checkTargets[i];
+                    p.x += (tgt.x - p.x) * p.ease;
+                    p.y += (tgt.y - p.y) * p.ease;
+                    p.alpha += (0.95 - p.alpha) * (p.ease + 0.008);
+                } else {
+                    p.alpha += (0 - p.alpha) * 0.04;
+                }
+            }
+
+            const inCheck = ringCheckmark && i < checkTargets.length;
+
+            ctx.fillStyle = `rgba(0,240,170,${p.alpha})`;
+            ctx.shadowColor = 'rgba(0,240,170,0.9)';
+            ctx.shadowBlur = inCheck ? 5 : 6;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.shadowBlur = 0;
+
+        requestAnimationFrame(frame);
+    }
+
+    canvas.style.opacity = '0';
+    canvas.style.transition = 'opacity 1.2s ease-out';
+    requestAnimationFrame(() => { canvas.style.opacity = '1'; });
+
+    frame();
 }

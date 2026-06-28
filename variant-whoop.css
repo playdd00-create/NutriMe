@@ -107,6 +107,24 @@ body {
     transform: translate(-50%, -50%);
     text-align: center;
     width: 72px;
+    z-index: 3;
+}
+
+/* Партиклы-«чёрная дыра» внутри кольца */
+.ring-particles {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.whoop-hero .progress-circle-large svg {
+    position: relative;
+    z-index: 2;
 }
 
 .whoop-hero .progress-percent-large {
